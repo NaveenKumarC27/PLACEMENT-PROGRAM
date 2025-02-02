@@ -1,0 +1,35 @@
+import java.util.Scanner;
+
+public class ReverseString {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        
+        String reversed = reverseStringKeepingPunctuation(input);
+        System.out.println(reversed);
+    }
+
+    public static String reverseStringKeepingPunctuation(String str) {
+        StringBuilder result = new StringBuilder();
+        StringBuilder letters = new StringBuilder();
+
+        for (char c : str.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                letters.append(c);
+            }
+        }
+
+        letters.reverse();
+        int letterIndex = 0;
+
+        for (char c : str.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                result.append(letters.charAt(letterIndex++));
+            } else {
+                result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+}
