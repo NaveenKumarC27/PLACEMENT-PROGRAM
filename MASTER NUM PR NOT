@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class MasterWordChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String word = scanner.nextLine();
+        
+        if (isMasterWord(word)) {
+            int num1 = extractNum1(word);
+            int num2 = extractNum2(word);
+            System.out.println("YES " + (num1 + num2));
+        } else {
+            int num1 = extractNum1(word);
+            int num2 = extractNum2(word);
+            System.out.println("NO " + (num1 - num2));
+        }
+        
+        scanner.close();
+    }
+
+    private static boolean isMasterWord(String word) {
+        if (word.length() < 5) return false;
+        if (Character.isDigit(word.charAt(0))) return false;
+        if (isVowel(word.charAt(1))) return false;
+        if (!word.substring(2).matches("\\d+[AEIOU]+\\d+.*")) return false;
+        char lastChar = word.charAt(word.length() - 1);
+        return lastChar == '[' || lastChar == '{' || lastChar == '}' || lastChar == ']';
+    }
+
+    private static boolean isVowel(char c) {
+        return "AEIOUaeiou".indexOf(c) != -1;
+    }
+
+   private static int extractNum1(String word) {
+    String modifiedWord = word;
+    
+    // If first character is a digit, remove it from consideration
+    if (Character.isDigit(word.charAt(0))) {
+        modifiedWord = word.substring(1);
+    }
+
+    String num1Str = modifiedWord.replaceAll("^[^\\d]*(\\d+).*", "$1");
+    return Integer.parseInt(num1Str);
+}
+
+
+    private static int extractNum2(String word) {
+        String num2Str = word.replaceAll(".*?([AEIOU]+)(\\d+)[^\\d]*$", "$2");
+        return Integer.parseInt(num2Str);
+    }
+}
