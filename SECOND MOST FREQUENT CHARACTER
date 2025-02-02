@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class SecondMostFrequentCharacter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        
+        char[] characters = input.toCharArray();
+        int[] frequency = new int[256];
+        
+        for (char c : characters) {
+            frequency[c]++;
+        }
+        
+        int firstMax = 0, secondMax = 0;
+        char firstChar = '\0', secondChar = '\0';
+        
+        for (int i = 0; i < frequency.length; i++) {
+            if (frequency[i] > firstMax) {
+                secondMax = firstMax;
+                secondChar = firstChar;
+                firstMax = frequency[i];
+                firstChar = (char) i;
+            } else if (frequency[i] > secondMax && frequency[i] < firstMax) {
+                secondMax = frequency[i];
+                secondChar = (char) i;
+            }
+        }
+        
+        if (secondMax == 0) {
+            System.out.println("No Second most frequent character");
+        } else {
+            System.out.println("Second most frequent character is " + secondChar);
+        }
+        
+        scanner.close();
+    }
+}
