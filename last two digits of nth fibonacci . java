@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class FibonacciLastTwoDigits {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        System.out.println(getLastTwoDigitsOfFibonacci(N));
+        scanner.close();
+    }
+
+    public static String getLastTwoDigitsOfFibonacci(int N) {
+        if (N == 0) return "00";  // If N=0, return 00
+        if (N == 1) return "01";  // If N=1, return 01
+
+        int a = 0, b = 1, c = 0;
+        for (int i = 2; i <= N; i++) {
+            c = (a + b) % 100; // Keep only last two digits
+            a = b;
+            b = c;
+        }
+
+        // Ensuring two-digit format, including cases like '02'
+        return (c < 10) ? "0" + c : String.valueOf(c);
+    }
+}
